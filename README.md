@@ -1,0 +1,2 @@
+# ContinuousMemoryAllocation
+连续内存分配示例程序
