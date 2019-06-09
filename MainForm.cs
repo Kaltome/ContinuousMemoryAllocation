@@ -20,10 +20,10 @@ namespace ContinuousMemoryAllocation
             freeMemList = new FreeMemList(new MemBlock(0, memSize));
             usedMemList = new UsedMemList();
             PrintFreeMemList();
-            memLabel2.Text = (1 * memSize / 4).ToString() + "K";
-            memLabel3.Text = (2 * memSize / 4).ToString() + "K";
-            memLabel4.Text = (3 * memSize / 4).ToString() + "K";
-            memLabel5.Text = (4 * memSize / 4).ToString() + "K";
+            memLabel2.Text = (1 * memSize / 4) + "K";
+            memLabel3.Text = (2 * memSize / 4) + "K";
+            memLabel4.Text = (3 * memSize / 4) + "K";
+            memLabel5.Text = (4 * memSize / 4) + "K";
         }
 
         public MainForm(int size)
@@ -34,10 +34,10 @@ namespace ContinuousMemoryAllocation
             freeMemList = new FreeMemList(new MemBlock(0, memSize));
             usedMemList = new UsedMemList();
             PrintFreeMemList();
-            memLabel2.Text = (1 * memSize / 4).ToString() + "K";
-            memLabel3.Text = (2 * memSize / 4).ToString() + "K";
-            memLabel4.Text = (3 * memSize / 4).ToString() + "K";
-            memLabel5.Text = (4 * memSize / 4).ToString() + "K";
+            memLabel2.Text = (1 * memSize / 4) + "K";
+            memLabel3.Text = (2 * memSize / 4) + "K";
+            memLabel4.Text = (3 * memSize / 4) + "K";
+            memLabel5.Text = (4 * memSize / 4) + "K";
         }
 
 
@@ -64,14 +64,14 @@ namespace ContinuousMemoryAllocation
             //检查是否执行完毕
             if(processList.Count == 0)
             {
+                MessageBox.Show("执行完成\r\n\r\n进程调入失败次数：" + falseNum, "提示");
                 ClearProcessList();
-                MessageBox.Show("执行完成", "提示");
             }
         }
 
 
         //自动执行函数
-        private void AutoRun()
+        private async void AutoRun()
         {
             //检查调度列表是否为空
             if (processList.Count == 0)
@@ -79,10 +79,13 @@ namespace ContinuousMemoryAllocation
                 MessageBox.Show("进程列表为空", "提示");
                 return;
             }
+            //屏蔽按钮交互响应
+            SetButton(false);
             //顺序执行
             foreach (var processAction in processList)
             {
-                Thread.Sleep(1000);
+                await Task.Delay(1000);
+                //判断是调入进程还是释放进程
                 if (processAction.op)
                 {
                     //记录下一个未调度的进程序号
@@ -90,17 +93,18 @@ namespace ContinuousMemoryAllocation
                     AddProcess(processAction.process);
                 }
                 else ReleaseProcess(processAction.process);
-                int i = 0;
             }
+            MessageBox.Show("执行完成\r\n\r\n进程调入失败次数：" + falseNum, "提示");
             //清空调度队列
             ClearProcessList();
-            MessageBox.Show("执行完成", "提示");
+            //恢复按钮交互响应
+            SetButton(true);
         }
 
         //调入进程
         private void AddProcess(Process process)
         {
-            //获取调入位置
+            //获取调入位置，如果成功则执行调入操作，不能便统计失败信息
             if (GetPositon(out int position, process.size))
             {
                 //新建TextBoxUI控件
@@ -108,10 +112,10 @@ namespace ContinuousMemoryAllocation
                 process.memBlock.Multiline = true;
                 process.memBlock.ReadOnly = true;
                 process.memBlock.BackColor = Color.LightSkyBlue;
-                process.memBlock.Text = "\r\n进\r\n程\r\n" + process.processNo.ToString();
+                process.memBlock.Text = "\r\n进\r\n程\r\n" + process.processNo;
                 process.memBlock.Font = new Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 134);
-                process.memBlock.Size = new Size((process.size * memUISize/ memSize), 100);
-                process.memBlock.Location = new Point(10 + position * (memUISize - 10) / memSize, 25);
+                process.memBlock.Size = new Size((process.size * memUISize / memSize), 100);
+                process.memBlock.Location = new Point(10 + position * memUISize / memSize, 25);
                 memPoolGroupBox.Controls.Add(process.memBlock);
                 process.memBlock.BringToFront();
                 process.memBlock.Refresh();
@@ -120,9 +124,13 @@ namespace ContinuousMemoryAllocation
                 process.processStarting = position;
                 freeMem -= process.size;
                 UpdateUsedMemList_AddProcess(position, process.size);
-                messageTextBox.AppendText("进程" + process.processNo + " 调度成功，插入位置：" + position.ToString() + "K\r\n");
+                messageTextBox.AppendText("进程" + process.processNo + " 调入成功，插入位置：" + position + "K\r\n");
             }
-            else messageTextBox.AppendText("无插入内存空间，进程" + process.processNo + "调度失败\r\n");
+            else
+            {
+                falseNum++;
+                messageTextBox.AppendText("无插入内存空间，进程" + process.processNo + "调入失败\r\n");
+            }
         }
 
         //获取调入位置，若无调入空间，返回false
@@ -169,16 +177,16 @@ namespace ContinuousMemoryAllocation
             return (p >= 0);
         }
 
-        //调入进程后更新空闲表信息
+        //调入进程后更新空闲区表信息
         private void UpdateFreeMemList_AddProcess(MemBlock freeMemBlock, int size)
         {
-            //若无需删除整个空闲块结点
+            //若无需删除整个空闲块结点，更改起点与大小
             if (freeMemBlock.blockSize != size)
             {
                 freeMemBlock.starting += size;
                 freeMemBlock.blockSize -= size;
             }
-            //若要删除空闲表头结点
+            //若要删除空闲区表头结点，将下一个结点当做头结点
             else if (freeMemBlock == freeMemList.first)
             {
                 freeMemList.first = freeMemBlock.next;
@@ -191,19 +199,19 @@ namespace ContinuousMemoryAllocation
                 lastBlock.next = freeMemBlock.next;
                 if (lastBlock.next != null) lastBlock.next.last = lastBlock;
             }
-            //更新空闲表信息
+            //更新空闲区表信息
             PrintFreeMemList();
         }
 
-        //调入进程后更新占用表信息
+        //调入进程后更新占用区表信息
         private void UpdateUsedMemList_AddProcess(int start, int size)
         {
-            //若占用表为空
+            //若占用表为空，创建头结点
             if (usedMemList.first == null) usedMemList.first = new MemBlock(start, size);
             else
             {
                 MemBlock block = usedMemList.first;
-                //若新表项在表头前
+                //若新表项在表头前，更新头结点
                 if (start < usedMemList.first.starting)
                 {
                     MemBlock newBlock = new MemBlock(start, size);
@@ -234,15 +242,16 @@ namespace ContinuousMemoryAllocation
         //释放进程
         private void ReleaseProcess(Process process)
         {
-            //若该进程已被调入在内存
+            //若该进程已被调入内存，则进行释放操作，否则输出失败信息
             if (process.processStarting != -1)
             {
                 //删除UI控件，更新占用表，空闲表信息，更新内存剩余空间大小
                 process.memBlock.Dispose();
                 UpdateFreeMemList_Release(process.processStarting, process.size);
                 UpdateUsedMemList_Release(process.processStarting, process.size);
-                process.processStarting = -1;
                 freeMem += process.size;
+                process.processStarting = -1;
+
                 messageTextBox.AppendText("进程" + process.processNo + " 已释放\r\n");
             }
             else messageTextBox.AppendText("进程" + process.processNo + " 并未在内存中，释放失败\r\n");
@@ -251,14 +260,15 @@ namespace ContinuousMemoryAllocation
         //释放进程后更新空闲表
         private void UpdateFreeMemList_Release(int start, int size)
         {
-            //若空闲表为空
+            //若空闲表为空，创建头结点
             if (freeMemList.first == null) freeMemList.first = new MemBlock(start, size);
             else
             {
+                //储存已修改的结点及其上一项，下一项的结点信息，便于执行合并操作
                 MemBlock block = new MemBlock(start, size);
                 MemBlock lastBlock = freeMemList.first;
                 MemBlock nextBlock = null;
-                //若新表项添加在头结点前
+                //若新表项添加在头结点前，更改头结点
                 if (start < lastBlock.starting)
                 {
                     block.next = lastBlock;
@@ -313,7 +323,7 @@ namespace ContinuousMemoryAllocation
         //释放进程后更新占用表
         private void UpdateUsedMemList_Release(int start, int size)
         {
-            //若删去整个头结点
+            //若删去整个头结点，修改新的头结点
             if (usedMemList.first.starting == start && usedMemList.first.blockSize == size) usedMemList.first = usedMemList.first.next;
             else
             {
@@ -325,18 +335,18 @@ namespace ContinuousMemoryAllocation
                     block.last.next = block.next;
                     if(block.next != null) block.next.last = block.last;
                 }
-                //若要删去某个节点前半部分
+                //若要删去某个节点前半部分，更新起址，大小
                 else if (start == block.starting)
                 {
                     block.starting += size;
                     block.blockSize -= size;
                 }
-                //若要删去某个节点后半部分
+                //若要删去某个节点后半部分，更新大小
                 else if (start + size == block.starting + block.blockSize)
                 {
                     block.blockSize -= size;
                 }
-                //删去某个节点的中间部分
+                //删去某个节点的中间部分，创建新的结点并连接
                 else
                 {
                     MemBlock newBlock = new MemBlock(start + size, block.starting + block.blockSize - start - size);
@@ -350,7 +360,7 @@ namespace ContinuousMemoryAllocation
             PrintUsedMemList();
         }
 
-        //更新空闲表信息
+        //打印空闲表信息
         private void PrintFreeMemList()
         {
             freeMemListTextBox.Text = string.Empty;
@@ -368,7 +378,7 @@ namespace ContinuousMemoryAllocation
             }
         }
 
-        //更新占用表信息
+        //打印占用表信息
         private void PrintUsedMemList()
         {
             usedMemListTextBox.Text = string.Empty;
@@ -395,7 +405,6 @@ namespace ContinuousMemoryAllocation
             processList.Clear();
             //清除调度进程列表信息
             processListTextBox.Clear();
-
             //更新选择释放进程列表栏信息
             //先清空
             //添加仍处在内存中的进程
@@ -406,14 +415,17 @@ namespace ContinuousMemoryAllocation
             }
             //更新编辑列表时创建下一个调入进程的编号
             nextProcessNoInCreate = nextProcessNo;
+            //重置记录失败次数为0
+            falseNum = 0;
         }
 
+        //重置系统
         private void Reset()
         {
             //重置下一个要调入的进程编号
             nextProcessNo = 1;
             nextProcessNoInCreate = 1;
-            //更新空闲表占用表信息
+            //重置空闲区表占用区表
             freeMemList.first = new MemBlock(0, memSize);
             usedMemList.first = null;
             PrintFreeMemList();
@@ -431,6 +443,8 @@ namespace ContinuousMemoryAllocation
             //清除运行信息
             messageTextBox.Clear();
         }
+
+
 
 
         //UI控件与交互---------------------------------------------------------------------------------------------------------------------
@@ -451,7 +465,9 @@ namespace ContinuousMemoryAllocation
             if (string.IsNullOrEmpty(getRandomNumTextBox.Text)) MessageBox.Show("数据未填写", "提示");
             else if (int.TryParse(getRandomNumTextBox.Text, out int randomNum) && randomNum >= 3 && randomNum <= 30)
             {
-                //模拟剩余空间大小
+                //初始化（清除）调度进程列表
+                ClearProcessList();
+                //获取剩余空间大小
                 int freeMemInRd = freeMem;
                 //储存可释放的进程的编号
                 List<int> rdCreatedProcess = new List<int>();
@@ -463,19 +479,17 @@ namespace ContinuousMemoryAllocation
                 {
                     if (process.processStarting != -1) rdCreatedProcess.Add(process.processNo);
                 }
-                //初始化（清除）调度进程列表
-                ClearProcessList();
 
                 for (int i = 0; i < randomNum; i++)
                 {
                     bool rdAction;
-                    //选择进程行为（调入/释放）的概率基于内存剩余容量对于内存总容量的占比
-                    //（模拟状态下）先默认创建调入进程，直至剩余容量小于总容量30%时，再开始采取随机策略
-                    if (isRdAction) rdAction = rd.Next(0, memSize) < freeMemInRd;
+                    //随机状态下创建新调入进程的概率为（剩余内存空间 / 总内存空间 * 1.2）
+                    //生成随机队列时先让内存充满至大于70%，再进行随机操作
+                    if (isRdAction) rdAction = rd.Next(0, memSize) < freeMemInRd * 1.2;
                     else rdAction = true;
                     if (rdAction)
                     {
-                        //创建新进程
+                        //创建新进程，加入创建进程列表
                         int rdProcessSize = rd.Next(25 * memSize / 10000 + 1, 30) * 10;
 
                         Process process = new Process(nextProcessNoInCreate, rdProcessSize);
@@ -485,11 +499,11 @@ namespace ContinuousMemoryAllocation
                         processList.Add(processAction);
                         rdCreatedProcess.Add(nextProcessNoInCreate);
                         chooseReleaseNoListBox.Items.Add(nextProcessNoInCreate);
-                        
+                        //更新下一个被创建的进程的编号，更新（随机创建状态下）剩余内存容量
                         nextProcessNoInCreate++;
                         freeMemInRd -= rdProcessSize;
 
-                        processListTextBox.AppendText("进程" + process.processNo + " 申请" + rdProcessSize + "K\r\n");
+                        processListTextBox.AppendText("进程" + process.processNo + " 申请" + rdProcessSize + "K\r\n"); 
 
                         if (!isRdAction) if (freeMemInRd < memSize * 0.3) isRdAction = true;
                     }
@@ -501,13 +515,13 @@ namespace ContinuousMemoryAllocation
                         Process process = processes[rdCreatedProcess[rdReleaseProcess] - 1];
                         ProcessAction processAction = new ProcessAction(process, rdAction);
 
-                        //添加进调度进程列表，从可释放进程列表中剔除，更新选择调出进程列表栏信息
+                        //添加进调度进程列表，从可释放进程列表中剔除，更新选择调出进程列表栏信息，更新（随机创建状态下）剩余内存容量
                         processList.Add(processAction);
                         rdCreatedProcess.RemoveAt(rdReleaseProcess);
                         chooseReleaseNoListBox.Items.Remove(process.processNo);
+                        freeMemInRd += process.size;
 
                         processListTextBox.AppendText("进程" + process.processNo + " 释放\r\n");
-                        freeMemInRd += process.size;
                     }
                 }
             }
@@ -541,7 +555,7 @@ namespace ContinuousMemoryAllocation
                 }
                 else MessageBox.Show("进程列表已满(30)", "提示");
             }
-            else MessageBox.Show("需要填入" + (25 * memSize / 1000).ToString() + "~400之间的数字", "提示");
+            else MessageBox.Show("需要填入" + (25 * memSize / 1000) + "~300之间的数字", "提示");
             getPSizeTextBox.Text = string.Empty;
         }
 
@@ -573,17 +587,19 @@ namespace ContinuousMemoryAllocation
             if (FFAlgorithmcheckBox.Checked)
             {
                 algorithm = true;
-                OAAlgorithmCheckBox.Checked = false;
+                BFAlgorithmCheckBox.Checked = false;
             }
+            else BFAlgorithmCheckBox.Checked = true;
         }
 
-        private void OAAlgorithmCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void BFAlgorithmCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (OAAlgorithmCheckBox.Checked)
+            if (BFAlgorithmCheckBox.Checked)
             {
                 algorithm = false;
                 FFAlgorithmcheckBox.Checked = false;
             }
+            else FFAlgorithmcheckBox.Checked = true;
         }
 
         private void AutoRunButton_Click(object sender, EventArgs e)
@@ -611,19 +627,32 @@ namespace ContinuousMemoryAllocation
             messageTextBox.Clear();
         }
 
-
+        private void SetButton(bool set)
+        {
+            createRandomListButton.Enabled = set;
+            addProcessButton.Enabled = set;
+            releaseProcessButton.Enabled = set;
+            runOneStepButton.Enabled = set;
+            autoRunButton.Enabled = set;
+            resetButton.Enabled = set;
+            clearProcessListButton.Enabled = set;
+            clearMessageBoxButton.Enabled = set;
+            FFAlgorithmcheckBox.Enabled = set;
+            BFAlgorithmCheckBox.Enabled = set;
+        }
 
         private static int maxProcessListSize = 30;
-        private static int memUISize = 930;
-        private readonly int memSize = 1000;
-        private int freeMem;
-        private int nextProcessNo = 1;                                              //下一个调入进程的编号
-        private int nextProcessNoInCreate = 1;                                      //编辑列表时创建下一个调入进程的编号
-        private bool algorithm = true;
-        private List<Process> processes = new List<Process>();                      //已创建进程
-        private List<ProcessAction> processList = new List<ProcessAction>();        //进程执行列表
-        private FreeMemList freeMemList;                                            //内存空闲区表
-        private UsedMemList usedMemList;
+        private static int memUISize = 1000;                                    //UI界面内存大小
+        private readonly int memSize = 1000;                                    //内存总容量
+        private int freeMem;                                                    //内存剩余容量
+        private int falseNum = 0;                                               //存储调度时调入进程失败次数
+        private int nextProcessNo = 1;                                          //下一个调入进程的编号
+        private int nextProcessNoInCreate = 1;                                  //编辑列表时创建下一个调入进程的编号
+        private bool algorithm = true;                                          //算法的选择，true为FF，False为BF
+        private List<Process> processes = new List<Process>();                  //已创建进程的列表
+        private List<ProcessAction> processList = new List<ProcessAction>();    //进程调度队列
+        private FreeMemList freeMemList;                                        //内存空闲区表
+        private UsedMemList usedMemList;                                        //内存占用区表
 
     }
 

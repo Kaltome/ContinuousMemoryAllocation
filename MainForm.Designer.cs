@@ -73,7 +73,7 @@
             this.messageTextBox = new System.Windows.Forms.TextBox();
             this.clearMessageBoxButton = new System.Windows.Forms.Button();
             this.FFAlgorithmcheckBox = new System.Windows.Forms.CheckBox();
-            this.OAAlgorithmCheckBox = new System.Windows.Forms.CheckBox();
+            this.BFAlgorithmCheckBox = new System.Windows.Forms.CheckBox();
             this.runOneStepButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.memPoolGroupBox.SuspendLayout();
@@ -93,14 +93,14 @@
             this.chooseReleaseNoListBox.Location = new System.Drawing.Point(8, 25);
             this.chooseReleaseNoListBox.Name = "chooseReleaseNoListBox";
             this.chooseReleaseNoListBox.ScrollAlwaysVisible = true;
-            this.chooseReleaseNoListBox.Size = new System.Drawing.Size(133, 64);
+            this.chooseReleaseNoListBox.Size = new System.Drawing.Size(138, 64);
             this.chooseReleaseNoListBox.TabIndex = 1;
             // 
             // Title
             // 
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Title.Location = new System.Drawing.Point(28, 13);
+            this.Title.Location = new System.Drawing.Point(28, 20);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(249, 45);
             this.Title.TabIndex = 2;
@@ -113,7 +113,7 @@
             this.MemPool.Multiline = true;
             this.MemPool.Name = "MemPool";
             this.MemPool.ReadOnly = true;
-            this.MemPool.Size = new System.Drawing.Size(930, 100);
+            this.MemPool.Size = new System.Drawing.Size(1000, 100);
             this.MemPool.TabIndex = 3;
             // 
             // usedMemListTextBox
@@ -125,14 +125,15 @@
             this.usedMemListTextBox.Name = "usedMemListTextBox";
             this.usedMemListTextBox.ReadOnly = true;
             this.usedMemListTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.usedMemListTextBox.Size = new System.Drawing.Size(250, 245);
+            this.usedMemListTextBox.Size = new System.Drawing.Size(270, 245);
             this.usedMemListTextBox.TabIndex = 6;
+            this.usedMemListTextBox.Text = "无占用区";
             // 
             // MenUsingListLabel
             // 
             this.MenUsingListLabel.AutoSize = true;
             this.MenUsingListLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.MenUsingListLabel.Location = new System.Drawing.Point(399, 451);
+            this.MenUsingListLabel.Location = new System.Drawing.Point(399, 456);
             this.MenUsingListLabel.Name = "MenUsingListLabel";
             this.MenUsingListLabel.Size = new System.Drawing.Size(0, 21);
             this.MenUsingListLabel.TabIndex = 4;
@@ -147,7 +148,7 @@
             this.freeMemListTextBox.ReadOnly = true;
             this.freeMemListTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.freeMemListTextBox.ShortcutsEnabled = false;
-            this.freeMemListTextBox.Size = new System.Drawing.Size(250, 245);
+            this.freeMemListTextBox.Size = new System.Drawing.Size(270, 245);
             this.freeMemListTextBox.TabIndex = 6;
             this.freeMemListTextBox.TabStop = false;
             this.freeMemListTextBox.Text = "空闲区1 起址：0 长度：1000K";
@@ -156,7 +157,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(370, 544);
+            this.label1.Location = new System.Drawing.Point(370, 549);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 21);
             this.label1.TabIndex = 4;
@@ -165,7 +166,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(218, 486);
+            this.label2.Location = new System.Drawing.Point(218, 491);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 25);
             this.label2.TabIndex = 4;
@@ -174,7 +175,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(715, 625);
+            this.label4.Location = new System.Drawing.Point(715, 630);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 17);
             this.label4.TabIndex = 4;
@@ -183,13 +184,13 @@
             // 
             this.processListTextBox.BackColor = System.Drawing.Color.White;
             this.processListTextBox.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.processListTextBox.Location = new System.Drawing.Point(225, 30);
+            this.processListTextBox.Location = new System.Drawing.Point(230, 30);
             this.processListTextBox.MaxLength = 6;
             this.processListTextBox.Multiline = true;
             this.processListTextBox.Name = "processListTextBox";
             this.processListTextBox.ReadOnly = true;
             this.processListTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.processListTextBox.Size = new System.Drawing.Size(140, 245);
+            this.processListTextBox.Size = new System.Drawing.Size(160, 245);
             this.processListTextBox.TabIndex = 6;
             // 
             // groupBox1
@@ -200,7 +201,7 @@
             this.groupBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(10, 30);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(205, 55);
+            this.groupBox1.Size = new System.Drawing.Size(210, 55);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "生成随机队列";
@@ -221,14 +222,14 @@
             this.getRandomNumTextBox.Location = new System.Drawing.Point(91, 22);
             this.getRandomNumTextBox.MaxLength = 2;
             this.getRandomNumTextBox.Name = "getRandomNumTextBox";
-            this.getRandomNumTextBox.Size = new System.Drawing.Size(50, 21);
-            this.getRandomNumTextBox.TabIndex = 7;
+            this.getRandomNumTextBox.Size = new System.Drawing.Size(55, 21);
+            this.getRandomNumTextBox.TabIndex = 1;
             this.getRandomNumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.getRandomNumTextBox_KeyPress);
             // 
             // createRandomListButton
             // 
             this.createRandomListButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.createRandomListButton.Location = new System.Drawing.Point(147, 21);
+            this.createRandomListButton.Location = new System.Drawing.Point(152, 21);
             this.createRandomListButton.Name = "createRandomListButton";
             this.createRandomListButton.Size = new System.Drawing.Size(50, 23);
             this.createRandomListButton.TabIndex = 8;
@@ -245,9 +246,9 @@
             this.memPoolGroupBox.Controls.Add(this.memLabel1);
             this.memPoolGroupBox.Controls.Add(this.MemPool);
             this.memPoolGroupBox.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.memPoolGroupBox.Location = new System.Drawing.Point(25, 415);
+            this.memPoolGroupBox.Location = new System.Drawing.Point(25, 420);
             this.memPoolGroupBox.Name = "memPoolGroupBox";
-            this.memPoolGroupBox.Size = new System.Drawing.Size(950, 155);
+            this.memPoolGroupBox.Size = new System.Drawing.Size(1020, 155);
             this.memPoolGroupBox.TabIndex = 11;
             this.memPoolGroupBox.TabStop = false;
             this.memPoolGroupBox.Text = "内存池";
@@ -256,7 +257,7 @@
             // 
             this.memLabel5.AutoSize = true;
             this.memLabel5.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.memLabel5.Location = new System.Drawing.Point(908, 130);
+            this.memLabel5.Location = new System.Drawing.Point(978, 130);
             this.memLabel5.Name = "memLabel5";
             this.memLabel5.Size = new System.Drawing.Size(39, 16);
             this.memLabel5.TabIndex = 4;
@@ -266,7 +267,7 @@
             // 
             this.memLabel4.AutoSize = true;
             this.memLabel4.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.memLabel4.Location = new System.Drawing.Point(683, 130);
+            this.memLabel4.Location = new System.Drawing.Point(735, 130);
             this.memLabel4.Name = "memLabel4";
             this.memLabel4.Size = new System.Drawing.Size(21, 16);
             this.memLabel4.TabIndex = 4;
@@ -276,7 +277,7 @@
             // 
             this.memLabel3.AutoSize = true;
             this.memLabel3.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.memLabel3.Location = new System.Drawing.Point(458, 130);
+            this.memLabel3.Location = new System.Drawing.Point(493, 130);
             this.memLabel3.Name = "memLabel3";
             this.memLabel3.Size = new System.Drawing.Size(21, 16);
             this.memLabel3.TabIndex = 4;
@@ -286,7 +287,7 @@
             // 
             this.memLabel2.AutoSize = true;
             this.memLabel2.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.memLabel2.Location = new System.Drawing.Point(233, 130);
+            this.memLabel2.Location = new System.Drawing.Point(250, 130);
             this.memLabel2.Name = "memLabel2";
             this.memLabel2.Size = new System.Drawing.Size(21, 16);
             this.memLabel2.TabIndex = 4;
@@ -311,9 +312,9 @@
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox2.Location = new System.Drawing.Point(25, 70);
+            this.groupBox2.Location = new System.Drawing.Point(25, 75);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(375, 285);
+            this.groupBox2.Size = new System.Drawing.Size(400, 285);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "编辑进程调度队列";
@@ -335,7 +336,7 @@
             this.groupBox5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox5.Location = new System.Drawing.Point(10, 175);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(205, 100);
+            this.groupBox5.Size = new System.Drawing.Size(210, 100);
             this.groupBox5.TabIndex = 9;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "选择释放的进程号";
@@ -352,7 +353,7 @@
             // releaseProcessButton
             // 
             this.releaseProcessButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.releaseProcessButton.Location = new System.Drawing.Point(147, 25);
+            this.releaseProcessButton.Location = new System.Drawing.Point(152, 25);
             this.releaseProcessButton.Name = "releaseProcessButton";
             this.releaseProcessButton.Size = new System.Drawing.Size(50, 23);
             this.releaseProcessButton.TabIndex = 8;
@@ -377,7 +378,7 @@
             this.groupBox3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox3.Location = new System.Drawing.Point(10, 110);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(205, 55);
+            this.groupBox3.Size = new System.Drawing.Size(210, 55);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "添加调入进程";
@@ -398,14 +399,14 @@
             this.getPSizeTextBox.Location = new System.Drawing.Point(91, 22);
             this.getPSizeTextBox.MaxLength = 3;
             this.getPSizeTextBox.Name = "getPSizeTextBox";
-            this.getPSizeTextBox.Size = new System.Drawing.Size(50, 21);
+            this.getPSizeTextBox.Size = new System.Drawing.Size(55, 21);
             this.getPSizeTextBox.TabIndex = 7;
             this.getPSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.getPSizeTextBox_KeyPress);
             // 
             // addProcessButton
             // 
             this.addProcessButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.addProcessButton.Location = new System.Drawing.Point(147, 21);
+            this.addProcessButton.Location = new System.Drawing.Point(152, 21);
             this.addProcessButton.Name = "addProcessButton";
             this.addProcessButton.Size = new System.Drawing.Size(50, 23);
             this.addProcessButton.TabIndex = 8;
@@ -419,9 +420,9 @@
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.freeMemListTextBox);
             this.groupBox6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox6.Location = new System.Drawing.Point(425, 70);
+            this.groupBox6.Location = new System.Drawing.Point(455, 75);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(270, 285);
+            this.groupBox6.Size = new System.Drawing.Size(290, 285);
             this.groupBox6.TabIndex = 10;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "内存空闲表";
@@ -450,9 +451,9 @@
             this.groupBox7.Controls.Add(this.label12);
             this.groupBox7.Controls.Add(this.usedMemListTextBox);
             this.groupBox7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox7.Location = new System.Drawing.Point(705, 70);
+            this.groupBox7.Location = new System.Drawing.Point(755, 75);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(270, 285);
+            this.groupBox7.Size = new System.Drawing.Size(290, 285);
             this.groupBox7.TabIndex = 10;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "内存占用表";
@@ -478,7 +479,7 @@
             // autoRunButton
             // 
             this.autoRunButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.autoRunButton.Location = new System.Drawing.Point(110, 375);
+            this.autoRunButton.Location = new System.Drawing.Point(110, 380);
             this.autoRunButton.Name = "autoRunButton";
             this.autoRunButton.Size = new System.Drawing.Size(80, 30);
             this.autoRunButton.TabIndex = 12;
@@ -489,7 +490,7 @@
             // clearProcessListButton
             // 
             this.clearProcessListButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.clearProcessListButton.Location = new System.Drawing.Point(770, 375);
+            this.clearProcessListButton.Location = new System.Drawing.Point(840, 380);
             this.clearProcessListButton.Name = "clearProcessListButton";
             this.clearProcessListButton.Size = new System.Drawing.Size(100, 30);
             this.clearProcessListButton.TabIndex = 12;
@@ -500,7 +501,7 @@
             // resetButton
             // 
             this.resetButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.resetButton.Location = new System.Drawing.Point(665, 375);
+            this.resetButton.Location = new System.Drawing.Point(735, 380);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(100, 30);
             this.resetButton.TabIndex = 12;
@@ -514,9 +515,9 @@
             this.groupBox8.Controls.Add(this.label14);
             this.groupBox8.Controls.Add(this.messageTextBox);
             this.groupBox8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox8.Location = new System.Drawing.Point(25, 580);
+            this.groupBox8.Location = new System.Drawing.Point(25, 585);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(950, 135);
+            this.groupBox8.Size = new System.Drawing.Size(1020, 155);
             this.groupBox8.TabIndex = 10;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "运行信息";
@@ -549,14 +550,14 @@
             this.messageTextBox.ReadOnly = true;
             this.messageTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.messageTextBox.ShortcutsEnabled = false;
-            this.messageTextBox.Size = new System.Drawing.Size(930, 100);
+            this.messageTextBox.Size = new System.Drawing.Size(1000, 120);
             this.messageTextBox.TabIndex = 6;
             this.messageTextBox.TabStop = false;
             // 
             // clearMessageBoxButton
             // 
             this.clearMessageBoxButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.clearMessageBoxButton.Location = new System.Drawing.Point(875, 375);
+            this.clearMessageBoxButton.Location = new System.Drawing.Point(945, 380);
             this.clearMessageBoxButton.Name = "clearMessageBoxButton";
             this.clearMessageBoxButton.Size = new System.Drawing.Size(100, 30);
             this.clearMessageBoxButton.TabIndex = 12;
@@ -570,7 +571,7 @@
             this.FFAlgorithmcheckBox.Checked = true;
             this.FFAlgorithmcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FFAlgorithmcheckBox.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.FFAlgorithmcheckBox.Location = new System.Drawing.Point(200, 381);
+            this.FFAlgorithmcheckBox.Location = new System.Drawing.Point(200, 386);
             this.FFAlgorithmcheckBox.Name = "FFAlgorithmcheckBox";
             this.FFAlgorithmcheckBox.Size = new System.Drawing.Size(93, 20);
             this.FFAlgorithmcheckBox.TabIndex = 13;
@@ -580,20 +581,20 @@
             // 
             // OAAlgorithmCheckBox
             // 
-            this.OAAlgorithmCheckBox.AutoSize = true;
-            this.OAAlgorithmCheckBox.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.OAAlgorithmCheckBox.Location = new System.Drawing.Point(300, 381);
-            this.OAAlgorithmCheckBox.Name = "OAAlgorithmCheckBox";
-            this.OAAlgorithmCheckBox.Size = new System.Drawing.Size(93, 20);
-            this.OAAlgorithmCheckBox.TabIndex = 13;
-            this.OAAlgorithmCheckBox.Text = "最佳适应算法";
-            this.OAAlgorithmCheckBox.UseVisualStyleBackColor = true;
-            this.OAAlgorithmCheckBox.CheckedChanged += new System.EventHandler(this.OAAlgorithmCheckBox_CheckedChanged);
+            this.BFAlgorithmCheckBox.AutoSize = true;
+            this.BFAlgorithmCheckBox.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BFAlgorithmCheckBox.Location = new System.Drawing.Point(300, 386);
+            this.BFAlgorithmCheckBox.Name = "OAAlgorithmCheckBox";
+            this.BFAlgorithmCheckBox.Size = new System.Drawing.Size(93, 20);
+            this.BFAlgorithmCheckBox.TabIndex = 13;
+            this.BFAlgorithmCheckBox.Text = "最佳适应算法";
+            this.BFAlgorithmCheckBox.UseVisualStyleBackColor = true;
+            this.BFAlgorithmCheckBox.CheckedChanged += new System.EventHandler(this.BFAlgorithmCheckBox_CheckedChanged);
             // 
             // runOneStepButton
             // 
             this.runOneStepButton.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.runOneStepButton.Location = new System.Drawing.Point(25, 375);
+            this.runOneStepButton.Location = new System.Drawing.Point(25, 380);
             this.runOneStepButton.Name = "runOneStepButton";
             this.runOneStepButton.Size = new System.Drawing.Size(80, 30);
             this.runOneStepButton.TabIndex = 12;
@@ -606,8 +607,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(1008, 729);
-            this.Controls.Add(this.OAAlgorithmCheckBox);
+            this.ClientSize = new System.Drawing.Size(1064, 761);
+            this.Controls.Add(this.BFAlgorithmCheckBox);
             this.Controls.Add(this.FFAlgorithmcheckBox);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.clearMessageBoxButton);
@@ -690,7 +691,7 @@
         private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.Button clearMessageBoxButton;
         private System.Windows.Forms.CheckBox FFAlgorithmcheckBox;
-        private System.Windows.Forms.CheckBox OAAlgorithmCheckBox;
+        private System.Windows.Forms.CheckBox BFAlgorithmCheckBox;
         private System.Windows.Forms.Button runOneStepButton;
         private System.Windows.Forms.Label memLabel1;
         private System.Windows.Forms.Label memLabel5;

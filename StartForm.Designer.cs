@@ -62,6 +62,7 @@
             this.textBox1.ShortcutsEnabled = false;
             this.textBox1.Size = new System.Drawing.Size(260, 23);
             this.textBox1.TabIndex = 5;
+            this.textBox1.Text = "1000";
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // button1
